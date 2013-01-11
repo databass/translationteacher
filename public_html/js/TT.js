@@ -1,6 +1,6 @@
 /*
  *
- *TranslateTalker module to handle speech and translation
+ *TranslationTeacher module to handle speech and translation
  *Author: David Byman (david.byman@gmail.com)
  *
  *
