@@ -3,6 +3,8 @@ translationteacher
 
 Translation Teacher is a browser-based, HTML5 language translation tool and teacher. 
 
+www.translationteacher.com
+
 Translation Teacher currently only runs on non-mobile Google Chrome browsers. 
 
 It uses the webkit speech input and the Google Translate API for both language translation and audio input.
