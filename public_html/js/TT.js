@@ -1,7 +1,7 @@
 /*
  *
- *TranslationTeacher module to handle speech and translation
- *Author: David Byman (david.byman@gmail.com)
+ * TranslationTeacher module to handle speech and translation
+ * Author: David Byman (david.byman@gmail.com)
  *
  *
  */
@@ -175,9 +175,8 @@ var TT = (function () {
 
         $.get("talk.php", {
             lang: (language || this.getLanguage()),
-	    bPhrase: trimmedWord,
-            tPhrase: trimmedWord,
-            format: 'mp3'
+	    phrase: trimmedWord,
+	    format: 'mp3'
     
         }, function (data) {
 
