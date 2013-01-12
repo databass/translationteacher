@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 
 <html>
-
 <head>
-  
-    <meta name="keywords" content="teacher translate translation talker language speech assistive technology"></meta>
-    <script type="text/javascript">
+<meta name="keywords" content="teacher translate translation talker language speech assistive technology"></meta>
+<script type="text/javascript">
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-22003827-5']);
-      _gaq.push(['_trackPageview']);
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22003827-5']);
+  _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 
-    </script>
+</script>
+  <script type="text/javascript">
 
-    <script type="text/javascript">
-
-      if (!navigator.userAgent.toString().match(/chrome/i)) {      
-      window.location='chrome.html';      
+    if (!navigator.userAgent.toString().match(/chrome/i)) {
+      
+      window.location='chrome.html';
+      
     }
-    </script>
+  </script>
 
-    <title>Translation Teacher</title>
-    <link href="css/tt.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="js/underscore-min.js">
-    </script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/jquery.getCursorPosition.js"></script>
-    <script src="js/parser_rules/advanced.js" type="text/javascript"></script>
-    <script src="js/wysihtml5-0.3.0.js" type="text/javascript"></script>
-    <script src="js/tt.js" type="text/javascript"></script>
-
+  <title>Translation Teacher</title>
+  <link href="css/tt.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="js/underscore-min.js">
+</script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type=
+  "text/javascript">
+</script>
+  <script type="text/javascript" src=
+  "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js">
+</script>
+  <script type="text/javascript" src="js/jquery.getCursorPosition.js">
+</script>
+  <script src="js/parser_rules/advanced.js" type="text/javascript">
+</script>
+  <script src="js/wysihtml5-0.3.0.js" type="text/javascript">
+</script>
+  <script src="js/tt.js" type="text/javascript">
+</script>
 </head>
 
 <body>
-
+  <form>
     <h1><span style="margin-right: 72px">Translation Teacher</span></h1>
 
     <form class="selections">
@@ -194,6 +200,10 @@
     
     <script type="text/javascript">      
 
+
+
+    //call the Translation Teacher mmodule, and then assign the untranslated and translated editors to it
+    
     var tt = TT;
 
     var untranslatedTextEditor = new wysihtml5.Editor("untranslatedTextContainer", {
@@ -239,7 +249,6 @@
 
 
 
-
     $(document).ready(function () {
 
 
@@ -257,18 +266,7 @@
         });
         
         
-        $('#untranslatedTextContainer').bind('input', function() {
 
-        
-                var sel = window.getSelection(), range, caretPos;
-        
-                var range = sel.getRangeAt(0);
-                caretPos = range.endOffset;
-        
-                //tt.setCurrentCursorPosition('untranslated',caretPos);
-
-
-        });
 
         $('#translatedLanguageSpeak').bind('click', function() {
                 
@@ -293,8 +291,8 @@
         $('#untranslatedLanguageSelection').bind('change', function() {
 
                 tt.setUntranslatedLanguage($('#untranslatedLanguageSelection option:selected').val());
-                $('#untranslatedLanguageSpeak').text('Speak ' + tt.getLanguageDescription(tt.getUntranslatedLanguage()));
-                $('#translatedLanguageRetranslate').text('Translate to ' + tt.getLanguageDescription(tt.getUntranslatedLanguage()));
+                $('#untranslatedLanguageSpeak').text('Speak ' + tt.getLanguageName(tt.getUntranslatedLanguage()));
+                $('#translatedLanguageRetranslate').text('Translate to ' + tt.getLanguageName(tt.getUntranslatedLanguage()));
 
         });
         
@@ -303,29 +301,31 @@
                 if (tt.getUntranslatedText().trim() != '') {
                   tt.translateText(tt.getUntranslatedText(),tt.getUntranslatedLanguage(), tt.getTranslatedLanguage());
                 }
-                $('#untranslatedLanguageRetranslate').text('Translate to ' + tt.getLanguageDescription(tt.getTranslatedLanguage()));
-                 $('#translatedLanguageSpeak').text('Speak ' + tt.getLanguageDescription(tt.getTranslatedLanguage()));
+                $('#untranslatedLanguageRetranslate').text('Translate to ' + tt.getLanguageName(tt.getTranslatedLanguage()));
+                $('#translatedLanguageSpeak').text('Speak ' + tt.getLanguageName(tt.getTranslatedLanguage()));
 
         });
         tt.setTranslatedLanguage($('#translatedLanguageSelection option:selected').val());
         tt.setUntranslatedLanguage($('#untranslatedLanguageSelection option:selected').val());
-        $('#untranslatedLanguageRetranslate').text('Translate to ' + tt.getLanguageDescription(tt.getTranslatedLanguage()));
-        $('#translatedLanguageRetranslate').text('Translate to ' + tt.getLanguageDescription(tt.getUntranslatedLanguage()));
+        $('#untranslatedLanguageRetranslate').text('Translate to ' + tt.getLanguageName(tt.getTranslatedLanguage()));
+        $('#translatedLanguageRetranslate').text('Translate to ' + tt.getLanguageName(tt.getUntranslatedLanguage()));
 
-        $('#untranslatedLanguageSpeak').text('Speak ' + tt.getLanguageDescription(tt.getUntranslatedLanguage()));
-        $('#translatedLanguageSpeak').text('Speak ' + tt.getLanguageDescription(tt.getTranslatedLanguage()));
+        $('#untranslatedLanguageSpeak').text('Speak ' + tt.getLanguageName(tt.getUntranslatedLanguage()));
+        $('#translatedLanguageSpeak').text('Speak ' + tt.getLanguageName(tt.getTranslatedLanguage()));
         
     });
 
 
+
+
+
     </script>
+  </form>
 
+  <footer>
+    <p>Translation Teacher is an experimental HTML5 language teaching tool and translator.</p>
 
-    <footer>
-      <p>Translation Teacher is an experimental HTML5 language teaching tool and translator.</p>
-      <p style="margin-top: 2em">For more information, please contact David Byman at david.byman@gmail.com.</p>
-    </footer>
-    
+    <p style="margin-top: 2em">For more information, please contact David Byman at david.byman@gmail.com.</p>
+</footer>
 </body>
-
 </html>
