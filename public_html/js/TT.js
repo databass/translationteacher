@@ -3,14 +3,14 @@
 
 /*
  *
- * TranslationTeacher module that handle speech recognization, speech output, and translation
+ * TranslationTeacher module that handles voice recognition, integration with HTML5 audio output, and translation via Google API
  * Author: David Byman (david.byman@gmail.com)
  *
  *
  */
 
-	
-	
+
+
 //change the value of GOOGLE_API_KEY below to your personal Google API Key.
 
 var TT = (function () { "use strict"; var my = {}, DEFAULT_LANGUAGE = 'en', lastCursorPosition = 0, GOOGLE_API_KEY = 'XXX', languageNames = [{
