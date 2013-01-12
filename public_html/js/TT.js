@@ -1,238 +1,232 @@
+/*jslint nomen: true*/
+/*global $, _, document, Audio, console*/
+
 /*
  *
- * TranslationTeacher module to handle speech and translation
+ * TranslationTeacher module that handle speech recognization, speech output, and translation
  * Author: David Byman (david.byman@gmail.com)
  *
  *
  */
 
+	
+	
+//change the value of GOOGLE_API_KEY below to your personal Google API Key.
 
-var TT = (function () {
-	var my = {},
-		DICTIONARY_ROOT = 'dictionary', DEFAULT_LANGUAGE = 'en', language = 'en', lastCursorPosition = 0, GOOGLE_API_KEY='XXX';
-		//change the value of GOOGLE_API_KEY above to your personal Google API Key.
-	
-	function getLanguageDescription(languageCode) {
-		
-		var languageNames = new Array();
-		languageNames['zh-CN']='Chinese';
-		languageNames['de']='German';
-		languageNames['es']='Spanish';
-		languageNames['fr']='French';
-		languageNames['en']='English';
-		languageNames['la']='Latin';
-		languageNames['sw']='Swahili';
-		languageNames['sv']='Swedish';
-		languageNames['hi']='Hindi';
-		languageNames['ru']='Russian';
-		languageNames['tr']='Turkish';
-		languageNames['ar']='Arabic';
-		return languageNames[languageCode];
-	}
-	
+var TT = (function () { "use strict"; var my = {}, DEFAULT_LANGUAGE = 'en', lastCursorPosition = 0, GOOGLE_API_KEY = 'XXX', languageNames = [{
+        'code': 'zh-CN',
+        'name': 'Chinese'
+    }, {
+        'code': 'de',
+        'name': 'German'
+    }, {
+        'code': 'es',
+        'name': 'Spanish'
+    }, {
+        'code': 'fr',
+        'name': 'French'
+    }, {
+        'code': 'en',
+        'name': 'English'
+    }, {
+        'code': 'la',
+        'name': 'Latin'
+    }, {
+        'code': 'sw',
+        'name': 'Swahili'
+    }, {
+        'code': 'sv',
+        'name': 'Swedish'
+    }, {
+        'code': 'hi',
+        'name': 'Hindi'
+    }, {
+        'code': 'ru',
+        'name': 'Russian'
+    }, {
+        'code': 'tr',
+        'name': 'Turkish'
+    }, {
+        'code': 'ar',
+        'name': 'Arabic'
+    }];
 
-	
-	my.moduleProperty = 1;
-        
-	my.baseWord = '';
-	my.translateWord = '';
-	
-	my.editor = [];
-	
-        my.setLanguage = function (selectedLanguage) {
-          
-          language=selectedLanguage;
-          
-        };
-	
-	my.setTranslatedLanguage = function (language) {
 
-          this.translatedLanguage=language;
-          
-        };
-	
-	
-	my.getEditor = function (editorName) {
-		return this.editor[editorName];
-			
-	};
-	
-	my.setEditor = function (editorName, editor) {
-		this.editor[editorName]=editor;
-			
-	};	
-	
+        my.moduleProperty = 1;
+        my.baseWord = '';
+        my.translateWord = '';
+        my.editor = [];
 
-	my.getTranslatedLanguage= function () {
-          
-          return this.translatedLanguage;
-          
-        };
-	
-	my.setUntranslatedLanguage= function (language) {
-          
-          this.untranslatedLanguage=language;
-          
-        };	
 
-	my.getUntranslatedLanguage= function () {
-          
-          return this.untranslatedLanguage;
-          
-        };		
-	
+        my.setTranslatedLanguage = function (language) {
 
-	my.setTranslatedText = function (text) {
-          
-          this.translatedText=text;
-          
-        };	
+            this.translatedLanguage = language;
 
-	my.getTranslatedText= function () {
-          
-          return translatedTextEditor.composer.getValue();
-
-          
-        };
-	
-	my.setUntranslatedText= function (text) {
-          
-          this.untranslatedText = text;
-          
-        };	
-
-	my.getUntranslatedText= function () {
-
-          return untranslatedTextEditor.composer.getValue();
-          
-        };		
-	
-        
-        my.getLanguage = function () {
-          if (language === undefined ) {
-            return DEFAULT_LANGUAGE;
-          }
-          else {
-            return language;
-          }
         };
 
-	my.getLanguageDescription = function (languageCode) {
-		return getLanguageDescription(languageCode);
 
-	}
+        my.getEditor = function (editorName) {
 
-        //more elegant with recursion?
-        var getLastWord = function(text,position) {
-  
-          var leftSubString=text.substring(0,position), wordCount=leftSubString.split(' ').length;
-          return leftSubString.split(' ')[wordCount-1];
+            return this.editor[editorName];
+
         };
-    
-	my.setLastCursorPosition = function(index) {
-		lastCursorPosition = index;
-		
-	}
-	
-	my.getLastCursorPosition = function() {
-		return lastCursorPosition;	
-		
-	}
 
-   	
-	my.getCurrentCursorPosition = function(editor) {
+        my.setEditor = function (editorName, editor) {
 
-	//	editor.composer.setValue(editor.composer.getValue().toString().replace(/&nbsp;/g,' '));
-		return editor.composer.selection.getRange().startOffset;
-		
-	} 
-	
-    
-        //split with underscore
-        my.findSelectedWordz = function(editor) {
-		var currentValue=editor.composer.getValue().toString().replace(/&nbsp;/g,' ');
-		console.log('value is ' + currentValue);
-		console.log('val is ' + editor.composer.getValue());
-		console.log('post ' + my.getLastCursorPosition() + ' ' + my.getCurrentCursorPosition(editor));
-		console.log('returning ' + currentValue.substring(my.getLastCursorPosition(), my.getCurrentCursorPosition(editor)));
-		return currentValue.substring(my.getLastCursorPosition(), my.getCurrentCursorPosition(editor));
-	
+            this.editor[editorName] = editor;
+
         };
-        
+
+
+        my.getTranslatedLanguage = function () {
+
+            return this.translatedLanguage;
+
+        };
+
+        my.setUntranslatedLanguage = function (language) {
+
+            this.untranslatedLanguage = language;
+
+        };
+
+        my.getUntranslatedLanguage = function () {
+
+            return this.untranslatedLanguage;
+
+        };
+
+
+        my.setTranslatedText = function (text) {
+
+            this.translatedText = text;
+
+        };
+
+
+        my.getTranslatedText = function () {
+
+            return my.getEditor('translated').composer.getValue();
+
+        };
+
+        my.setUntranslatedText = function (text) {
+
+            this.untranslatedText = text;
+
+        };
+
+        my.getUntranslatedText = function () {
+
+            return my.getEditor('untranslated').composer.getValue();
+
+        };
+
+        my.getLanguageName = function (code) {
+
+            return _.find(languageNames, function (language) {
+                return language.code === code;
+            }).name;
+
+        };
+
+        my.setLastCursorPosition = function (index) {
+
+            lastCursorPosition = index;
+
+        };
+
+        my.getLastCursorPosition = function () {
+
+            return lastCursorPosition;
+
+        };
+
+        my.getCurrentCursorPosition = function (editor) {
+
+            return editor.composer.selection.getRange().startOffset;
+
+        };
+
+
+        my.findSelectedWordz = function (editor) {
+
+            var currentValue = editor.composer.getValue().toString().replace(/&nbsp;/g, ' ');
+            return currentValue.substring(my.getLastCursorPosition(), my.getCurrentCursorPosition(editor));
+
+        };
+
         my.sayWord = function (word, language) {
-          
+
             var snd = new Audio("dictionary/" + language + "/" + word + ".mp3");
             snd.play();
-          
+
         };
 
 
-        
+        my.writeWord = function (word, language) {
 
-	my.writeWord = function (word, language) {
+            var trimmedWord = word.replace(/&nbsp;/g, '').replace(/\s$/, '');
+            $.get("talk.php", {
+                lang: (language || DEFAULT_LANGUAGE),
+                phrase: trimmedWord,
+                format: 'mp3'
 
-        var trimmedWord=word.replace(/&nbsp;/g,'').replace(/\s$/,'');  
+            }, function (data) {
+                my.sayWord(data, language || DEFAULT_LANGUAGE);
+            });
 
-        $.get("talk.php", {
-            lang: (language || this.getLanguage()),
-	    phrase: trimmedWord,
-	    format: 'mp3'
-    
-        }, function (data) {
-
-              my.sayWord(data, language || my.getLanguage());
-          });
-
-   
         };
-	
+
+        //called after the mic recognizes speech
+        my.translateTextListener = function (response) {
+
+            var untranslatedText = document.getElementById('translateMicrophone').value;
+            my.getEditor('untranslated').composer.setValue(untranslatedText);
+            my.translateText(untranslatedText, my.getUntranslatedLanguage(), my.getTranslatedLanguage());
+
+        };
+
+         //called whenever a translation request is made
+         my.translateText = function (sourceText, sourceLanguage, targetLanguage) {
+
+            var source = 'https://www.googleapis.com/language/translate/v2?key=' + GOOGLE_API_KEY + '&source=' + sourceLanguage + '&target=' + targetLanguage + '&callback=tt.translateTextCallback&q=' + sourceText,
+                newScript = document.createElement('script');
+
+            //JSONP callback for Google Translate API
+            //using a closure allows the callback to contain additional details about the translation request.
+
+            my.translateTextCallback = function (response) {
+                var translatedText = response.data.translations[0].translatedText;
+                console.log("untranslated language is " + sourceLanguage);
+                console.log("translated language is " + targetLanguage);
+                console.log("untranslated text is " + sourceText);
+                console.log("translated text is " + translatedText + '\n');
+
+                (function () {
+
+                    if (targetLanguage === my.getUntranslatedLanguage()) {
+
+                        my.getEditor('untranslated').composer.setValue(translatedText);
+
+                    } else {
+
+                        my.getEditor('translated').composer.setValue(translatedText);
+                    }
+
+                    my.writeWord(translatedText, targetLanguage);
+
+                }());
+
+            };
 
 
-	
-	
-	//called after mic recognizes speech
-	my.translateTextListener = function (response) {
-	
+            newScript.type = 'text/javascript';
+            newScript.src = source;
 
-		var untranslatedText=document.getElementById('translateMicrophone').value;
-		untranslatedTextEditor.composer.setValue(untranslatedText);
-		my.translateText(untranslatedText, my.getUntranslatedLanguage(), my.getTranslatedLanguage());
+            document.getElementsByTagName('head')[0].appendChild(newScript);
+        }
 
+    return my;
 
-	};
-
-
-	
-	my.translateText = function (sourceText, sourceLanguage, targetLanguage) {
-
-		var source = 'https://www.googleapis.com/language/translate/v2?key=' + GOOGLE_API_KEY + '&source=' + sourceLanguage + '&target=' + targetLanguage + '&callback=tt.translateTextCallback&q=' + sourceText, newScript = document.createElement('script');
-		my.translateTextCallback = function (response) {
-
-			var translatedText=response.data.translations[0].translatedText;
-			console.log("translated text is " + translatedText);
-			console.log("Translated language is " + targetLanguage);
-			
-			(function() {
-				if (targetLanguage == my.getUntranslatedLanguage()) {
-					my.getEditor('untranslated').composer.setValue(translatedText);
-				}
-				else {
-			
-					my.getEditor('translated').composer.setValue(translatedText);
-				}
-				my.writeWord(translatedText,targetLanguage);
-			})();
-
-		};
-
-
-		newScript.type = 'text/javascript';
-		newScript.src = source;
-
-		document.getElementsByTagName('head')[0].appendChild(newScript);
-	}
-	
-
-
-	return my;
 }());
