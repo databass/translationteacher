@@ -60,46 +60,46 @@ var TT = (function () { "use strict"; var my = {}, DEFAULT_LANGUAGE = 'en', last
 
         my.setTranslatedLanguage = function (language) {
 
-            this.translatedLanguage = language;
+            my.translatedLanguage = language;
 
         };
 
 
         my.getEditor = function (editorName) {
 
-            return this.editor[editorName];
+            return my.editor[editorName];
 
         };
 
         my.setEditor = function (editorName, editor) {
 
-            this.editor[editorName] = editor;
+            my.editor[editorName] = editor;
 
         };
 
 
         my.getTranslatedLanguage = function () {
 
-            return this.translatedLanguage;
+            return my.translatedLanguage;
 
         };
 
         my.setUntranslatedLanguage = function (language) {
 
-            this.untranslatedLanguage = language;
+            my.untranslatedLanguage = language;
 
         };
 
         my.getUntranslatedLanguage = function () {
 
-            return this.untranslatedLanguage;
+            return my.untranslatedLanguage;
 
         };
 
 
         my.setTranslatedText = function (text) {
 
-            this.translatedText = text;
+            my.translatedText = text;
 
         };
 
@@ -112,7 +112,7 @@ var TT = (function () { "use strict"; var my = {}, DEFAULT_LANGUAGE = 'en', last
 
         my.setUntranslatedText = function (text) {
 
-            this.untranslatedText = text;
+            my.untranslatedText = text;
 
         };
 
